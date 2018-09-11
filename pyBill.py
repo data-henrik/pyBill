@@ -7,6 +7,10 @@
 import json
 from os.path import expanduser
 import requests
+import datetime
+
+# To get the current month
+now = datetime.datetime.now()
 
 # Get the path for current user
 homedir = expanduser("~")
@@ -22,7 +26,7 @@ resourceGroupID=credentials.get('ResourceGroup').get('GUID')
 
 
 METERING_HOST="https://metering-reporting.ng.bluemix.net"
-METERING_URL="/v4/accounts/"+account_id+"/resource_groups/"+resourceGroupID+"/usage/2018-09"
+METERING_URL="/v4/accounts/"+account_id+"/resource_groups/"+resourceGroupID+"/usage/"+str(now.year)+"-"+str(now.month)
 
 url=METERING_HOST+METERING_URL
 headers = {
