@@ -88,6 +88,8 @@ if __name__ == '__main__':
         data=processResourceInstanceUsage(account_id, billMonth)
     else:
         print ("Use -h for help.")
+
+    print ("Account: "+account_id)
     
     if data is not None:
         if (parms.printJSON):
@@ -95,5 +97,3 @@ if __name__ == '__main__':
         else:
             print ("No other option")
 
-
-#jq '.[] | {month,resource_name,organization_name,space_name,resource_group_name,metric: .usage[].metric,cost : .usage[].cost}'
