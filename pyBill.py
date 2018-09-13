@@ -1,3 +1,4 @@
+#!/usr/bin/env python36
 # Quick hack to dump billing information for the
 # currently set account and resource group
 #
@@ -15,7 +16,7 @@ import argparse
 def getParameters(args=None):
     parser = argparse.ArgumentParser(description='Some billing and usage data',
                                      prog='pyBill.py',
-                                     usage='%(prog)s [-h | -l | -g | -c | -u | -d] [options]')
+                                     usage='%(prog)s [-h | -rgu | -riu] [options]')
     parser.add_argument("-rgu",dest='resourceGroupUsage', action='store_true', help='resource group usage')
     parser.add_argument("-riu",dest='resourceInstanceUsage', action='store_true', help='resource instance usage')
     parser.add_argument("-print",dest='printJSON', action='store_true', help='print JSON data')
@@ -86,7 +87,7 @@ if __name__ == '__main__':
     elif (parms.resourceInstanceUsage):
         data=processResourceInstanceUsage(account_id, billMonth)
     else:
-        print ("No valid option specified!")
+        print ("Use -h for help.")
     
     if data is not None:
         if (parms.printJSON):
