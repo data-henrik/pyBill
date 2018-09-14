@@ -12,7 +12,6 @@ Print the resource instance usage for 08/2018 as CSV (CSV only supported for "ri
 ./pyBill.py -riu -csv -m 2018-08
 ```
 
-
 Print the resource group usage (currently set group) for 05/2018:
 ```
 ./pyBill.py -rgu -print -m 2018-05
