@@ -1,4 +1,4 @@
-#!/usr/bin/env python36
+#!/usr/bin/env python
 # Quick hack to dump billing information for the
 # currently set account and resource group
 #
@@ -20,6 +20,7 @@ def getParameters(args=None):
     parser.add_argument("-rgu",dest='resourceGroupUsage', action='store_true', help='resource group usage')
     parser.add_argument("-riu",dest='resourceInstanceUsage', action='store_true', help='resource instance usage')
     parser.add_argument("-print",dest='printJSON', action='store_true', help='print JSON data')
+    parser.add_argument("-csv",dest='csv', action='store_true', help='print as csv')
     parser.add_argument("-m",dest='billMonth', help='billing month YYYY-MM')
     parms = parser.parse_args()
     return parms
@@ -65,7 +66,7 @@ if __name__ == '__main__':
     homedir = expanduser("~")
 
     data=None
-    
+
     # open the IBM Cloud config file
     # Assumption: user is logged in and resource group is set
     with open(homedir+'/.bluemix/config.json') as data_file:
@@ -89,11 +90,20 @@ if __name__ == '__main__':
     else:
         print ("Use -h for help.")
 
-    print ("Account: "+account_id)
+    #print ("Account: "+account_id)
     
     if data is not None:
         if (parms.printJSON):
             print (json.dumps(data, indent=4, sort_keys=True))
+        elif (parms.csv):
+            tags=['resource_instance_name', 'usage', 'resource_name', 'billable']
+            #resources= [{x['resource_instance_name'], x['usage']} for x in data['resources'] ]
+            #resources= [{restxt:x[restxt], usgtxt:x[usgtxt]} for x in data['resources'] ]
+            resources= [{i:x[i] for i in tags } for x in data['resources']  ]
+            #print (json.dumps(resources, indent=4))
+            print ("resource, billable, metric, cost")
+            for i in resources:
+                for j in i['usage']:
+                    print (i['resource_name']+","+str(i['billable'])+","+j['metric']+","+str(j['cost'])) 
         else:
             print ("No other option")
-
